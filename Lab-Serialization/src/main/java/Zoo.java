@@ -1,4 +1,4 @@
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Zoo implements Serializable {
@@ -7,7 +7,7 @@ public class Zoo implements Serializable {
     private ArrayList<Animal> animals = new ArrayList<Animal>();
     private float price;
 
-    public Zoo(String name, float price){
+    public Zoo(String name, float price) {
         this.name = name;
         this.price = price;
 
@@ -37,26 +37,47 @@ public class Zoo implements Serializable {
         this.name = name;
     }
 
-    public void addAnimal(Animal ani){
+    public void addAnimal(Animal ani) {
         animals.add(ani);
     }
 
-    public String toString(){
-        return this.name + " - admission is $" + this.price + "\n\n" + "Animals at the zoo:\n\n" + animals;
+    public String toString() {
+        return this.name + " - admission is $" + this.price + "\n\n" + "Animals at the zoo:\n\n" + animals.toString();
     }
 
-    public static void main(String[] args){
-        Zoo z = new Zoo("John Ball Zoo", 15);
-        Animal tiger = new Animal("Tiger", 15);
-        Animal lion = new Animal("Lion", 12);
-        Animal leopard = new Animal("Leopard", 45);
-
-        z.addAnimal(tiger);
-        z.addAnimal(lion);
-        z.addAnimal(leopard);
-
-        System.out.println(z);
+    public static void main(String[] args) {
+        Zoo jb = new Zoo("John Ball", 10);
+        Animal tiger = new Animal("Tiger", 42);
+        Animal frog = new Animal("Frog", 31);
+        jb.addAnimal(tiger);
+        jb.addAnimal(frog);
+        System.out.println(jb);
+        jb.writeFile("animals.ser");
+        Zoo njb = jb.readFile("animals.ser");
+        System.out.println(njb);
     }
 
+    public void writeFile(String filename) {
+        try {
+            FileOutputStream fOut = new FileOutputStream(filename);
+            ObjectOutputStream objOut = new ObjectOutputStream(fOut);
+            objOut.writeObject("this");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
+    public Zoo readFile(String filename) {
+        try {
+            FileOutputStream fOut = new FileOutputStream(filename);
+            ObjectOutputStream objOut = new ObjectOutputStream(fOut);
+            Zoo z = new Zoo(filename, 10);
+            z = (Zoo) objOut.readObject();
+            return z;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }
+
