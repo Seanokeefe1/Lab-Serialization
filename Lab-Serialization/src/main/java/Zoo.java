@@ -42,14 +42,14 @@ public class Zoo implements Serializable {
     }
 
     public String toString(){
-        return this.name + " - admission is $" + this.price + "\n\n" + "Animals at the zoo:\n\n";
+        return this.name + " - admission is $" + this.price + "\n\n" + "Animals at the zoo:\n\n" + animals;
     }
 
     public static void main(String[] args){
         Zoo z = new Zoo("John Ball Zoo", 15);
-        Animal tiger = new Animal("Tiger");
-        Animal lion = new Animal("Lion");
-        Animal leopard = new Animal("Leopard");
+        Animal tiger = new Animal("Tiger", 15);
+        Animal lion = new Animal("Lion", 12);
+        Animal leopard = new Animal("Leopard", 45);
 
         z.addAnimal(tiger);
         z.addAnimal(lion);
